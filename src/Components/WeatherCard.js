@@ -11,6 +11,8 @@ const WeatherCard = ({ dt, temp, main, icon }) => {
                 className="w-20 mx-auto mt-4"
                 src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
                 alt="Weather Icon"
+                width={20}
+                height={20}
             />
             <div className="p-4">
                 <h3 className="text-xl font-semibold text-center">{main}</h3>
