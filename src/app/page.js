@@ -1,11 +1,13 @@
 "use client";  // This tells Next.js this is a Client Component
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Weather3D from '@/Components/Weather3D';
 import CitySelector from "@/Components/Search";
 import WeatherList from "@/Components/WeatherCardList";
 
 export default function Home() {
+  const [weatherCondition, setWeatherCondition] = useState('Clear');  // Default to "Clear"
   const [url, setUrl] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -16,21 +18,35 @@ export default function Home() {
 
   useEffect(() => {
     if (!url) return;
-    const fetchWeather = async () => {
+
+    const fetchWeatherData = async () => {
       setIsLoading(true);
       try {
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const result = await response.json();
         setData(result);
         setError(null);
+
+        // const condition = result?.weather[0]?.main || 'Clear';  // Fallback to "Clear"
+        // setWeatherCondition(condition);  // Update weather condition state
       } catch (err) {
-        setError("Error fetching weather data");
-        setData(null);
+        console.error(err.message);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
-    fetchWeather();
+
+    fetchWeatherData();
   }, [url]);
+
+  // const handleSearch = (city, state) => {
+  //   const formattedUrl = `${REACT_APP_API_BASE_URL}/data/2.5/weather?q=${city},${state}&appid=${REACT_APP_API_KEY}`;
+  //   setUrl(formattedUrl);  // Update URL to trigger fetch
+  // };
 
   const getContent = () => {
     if (error) return <h2>Error: {error}</h2>;
@@ -42,6 +58,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-2 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        {/* {weatherCondition && <Weather3D weatherCondition={weatherCondition} />} Only render when condition is available */}
         <CitySelector
           onSearch={(city, state) =>
             setUrl(

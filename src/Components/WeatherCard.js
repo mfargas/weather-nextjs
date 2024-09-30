@@ -15,7 +15,7 @@ const WeatherCard = ({ dt, temp, main, icon }) => {
     const tempFahrenheit = ((temp - 273.15) * 9) / 5 + 32;
 
     return (
-        <div className="max-w-xs mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
             <Image
                 className="w-20 mx-auto mt-4"
                 src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
