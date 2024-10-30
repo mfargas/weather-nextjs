@@ -35,7 +35,8 @@ const CitySelector = ({ onSearch }) => {
             </div>
             <div className="mt-4 text-center">
                 <button
-                    className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="h-10 px-6 font-semibold rounded-md bg-black text-white focus:outline-none focus:ring-1 hover:outline-none hover:ring-1"
+                    style={{ outline: "2px solid white" }}
                     onClick={() => onSearch(city, state)}
                 >
                     Check weather forecast
